@@ -30,6 +30,8 @@ p{margin:0 0 12px;color:#3C3C43}
 .opts{display:flex;flex-direction:column;gap:8px}
 .opts.row{flex-direction:row}
 .opts.row .opt{flex:1;justify-content:center;text-align:center}
+.opts.grid2{display:grid;grid-template-columns:1fr 1fr}
+.opts.grid2 .opt{justify-content:center;text-align:center}
 .opt{display:flex;align-items:center;gap:10px;padding:13px 14px;border-radius:12px;background:var(--plate);font-weight:600;font-size:16px;border:0;text-align:left;min-height:50px;cursor:pointer;width:100%}
 .opt.sel{background:#000;color:#fff}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
@@ -64,10 +66,9 @@ p{margin:0 0 12px;color:#3C3C43}
 .vmid{flex:1 1 auto;min-height:0;position:relative}
 .vscroll{position:absolute;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;background:var(--page)}
 .vscroll.white{background:#fff}
-.vscroll img.full{width:100%;display:block}
-.vscroll img.barimg{position:sticky;bottom:0;width:100%;display:block;margin-top:-23.5%;border-radius:16px 16px 0 0;box-shadow:0 -4px 12px rgba(0,0,0,.06);z-index:2}
+.vscroll img.full{width:100%;height:auto;display:block}
+.vscroll img.barimg{position:sticky;bottom:0;width:100%;height:auto;display:block;margin-top:0;filter:drop-shadow(0 -3px 8px rgba(0,0,0,.10));z-index:2}
 .vhint{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);background:rgba(0,0,0,.82);color:#fff;font-size:14px;font-weight:600;padding:9px 14px;border-radius:999px;white-space:nowrap;pointer-events:none;transition:opacity .25s;z-index:3}
-.vhint.withbar{bottom:calc(min(480px,100vw)*0.3253 + 14px)}
 .vhint.off{opacity:0}
 .vbottom{flex:0 0 auto;background:#fff;padding:10px 14px calc(12px + env(safe-area-inset-bottom));box-shadow:0 -2px 12px rgba(0,0,0,.08);position:relative;z-index:4}
 .vq{font-size:15px;font-weight:700;margin-bottom:8px;display:flex;justify-content:space-between;align-items:baseline;gap:8px;white-space:nowrap}
@@ -113,7 +114,7 @@ p{margin:0 0 12px;color:#3C3C43}
 <body>
 
 <section class="page on" id="p-intro">
- <div class="step">Шаг 1 из 4</div>
+ <div class="step">Шаг 1 из 5</div>
  <h1>Какой экран заказа удобнее?</h1>
  <p>Выбираем новый экран заказа и хотим сделать его удобным для вас. Опрос займёт 3–4 минуты.</p>
  <div class="q">Имя и фамилия</div>
@@ -128,7 +129,7 @@ p{margin:0 0 12px;color:#3C3C43}
 </section>
 
 <section class="page" id="p-events">
- <div class="step">Шаг 2 из 4</div>
+ <div class="step">Шаг 2 из 5</div>
  <h2>Вспомните последние 10 заказов</h2>
  <div class="q" style="margin-top:10px">Что из этого случалось с вами на экране заказа?<small>Отметьте всё, что было</small></div>
  <div class="chips" data-key="events" data-multi="1" data-none="Ничего из этого">
@@ -147,9 +148,21 @@ p{margin:0 0 12px;color:#3C3C43}
  <button class="btn primary" id="b-events">Дальше</button>
 </section>
 
+<section class="page" id="p-now">
+ <div class="step">Шаг 3 из 5</div>
+ <h2>Экран заказа сейчас</h2>
+ <p class="muted">Сначала два вопроса про экран, который сейчас в приложении.</p>
+ <div class="q" style="margin-top:14px">Вам нравится экран заказа, который сейчас в приложении?</div>
+ <div class="opts" data-key="like"><button type="button" class="opt">Да, нравится</button><button type="button" class="opt">Нормально</button><button type="button" class="opt">Нет, не нравится</button></div>
+ <div class="q">Бывает, что он кажется вам слишком пёстрым, рябит в глазах?</div>
+ <div class="opts grid2" data-key="ryabit"><button type="button" class="opt">Часто</button><button type="button" class="opt">Иногда</button><button type="button" class="opt">Редко</button><button type="button" class="opt">Никогда</button></div>
+ <div class="err" id="e-now">Ответьте на оба вопроса</div>
+ <button class="btn primary" id="b-now">Дальше</button>
+</section>
+
 <section class="page" id="p-how">
- <div class="step">Шаг 3 из 4</div>
- <h2>Сейчас покажем <span id="how-n">шесть</span> экранов</h2>
+ <div class="step">Шаг 4 из 5</div>
+ <h2>Сейчас покажем <span id="how-n">четыре экрана</span></h2>
  <p>Это один и тот же новый заказ. Первый экран такой, как сейчас в приложении, остальные новые.</p>
  <div class="how">
   <div><b>1</b><span>Листайте экран вниз, как в приложении.</span></div>
@@ -164,7 +177,7 @@ p{margin:0 0 12px;color:#3C3C43}
   <div class="vtop">
    <button class="vback" id="v-back" aria-label="Назад"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
    <div class="vhead">
-    <div class="vrow"><b id="v-title">Экран 1 из 6</b><span class="tag" id="v-tag">Новый вариант</span></div>
+    <div class="vrow"><b id="v-title">Экран 1 из 4</b><span class="tag" id="v-tag">Новый вариант</span></div>
     <div class="vprog" id="v-prog"></div>
    </div>
   </div>
@@ -192,17 +205,15 @@ p{margin:0 0 12px;color:#3C3C43}
 </section>
 
 <section class="page" id="p-final">
- <div class="step">Шаг 4 из 4</div>
+ <div class="step">Шаг 5 из 5</div>
  <h2>Какой экран самый удобный?</h2>
  <p class="muted">Нажмите на экран, чтобы выбрать. Лупа открывает его целиком.</p>
  <div class="grid" id="grid"></div>
  <div class="q">Почему именно он?<small>Необязательно</small></div>
  <textarea class="ta" id="f-why" placeholder="Что в нём удобнее"></textarea>
- <div class="q">Бывает, что экран заказа в приложении кажется вам слишком пёстрым, рябит в глазах?</div>
- <div class="opts" data-key="ryabit"><button type="button" class="opt">Часто</button><button type="button" class="opt">Иногда</button><button type="button" class="opt">Редко</button><button type="button" class="opt">Никогда</button></div>
  <div class="q">Что бы вы добавили или убрали на экране заказа?<small>Необязательно</small></div>
  <textarea class="ta" id="f-wish" placeholder="Одна вещь, которую стоит изменить"></textarea>
- <div class="err" id="e-final">Выберите экран и ответьте на вопрос про «рябит»</div>
+ <div class="err" id="e-final">Нажмите на экран, который удобнее</div>
  <button class="btn primary" id="b-send">Отправить</button>
  <div class="err" id="e-send">Не удалось отправить. Проверьте интернет и нажмите ещё раз</div>
 </section>
@@ -219,18 +230,19 @@ p{margin:0 0 12px;color:#3C3C43}
 (function(){
 "use strict";
 var FORM_ACTION="https://docs.google.com/forms/d/e/1FAIpQLSdamXvF4miEZs1m4J5Uqi57x-DYyqc1l4xskTmM5qVJPabpvw/formResponse";
-var E={"name": "entry.1433020472", "transport": "entry.1463450199", "tenure": "entry.1316740260", "events": "entry.1811349607", "story": "entry.1464482797", "r_A": "entry.531343616", "r_V1": "entry.1648588287", "r_V2": "entry.2064450811", "r_V3": "entry.663186859", "r_V4": "entry.10806726", "r_V5": "entry.748552560", "screens": "entry.435121953", "choice": "entry.659315465", "why": "entry.401634462", "ryabit": "entry.620689173", "wish": "entry.809589968", "seconds": "entry.189630847", "raw": "entry.1637766922"};
-var SCREENS=[{"key": "A", "name": "Как сейчас", "img": "img/a.png", "base": true, "white": true}, {"key": "V1", "name": "В1 Решение сверху", "img": "img/v1.png"}, {"key": "V2", "name": "В2 Кнопки внизу", "img": "img/v2.png", "bar": "img/v2bar.png"}, {"key": "V3", "name": "В3 Действия сверху", "img": "img/v3.png"}, {"key": "V4", "name": "В4 Одна карточка", "img": "img/v4.png"}, {"key": "V5", "name": "В5 Карта", "img": "img/v5.png"}];
-var LIKE=["Сразу видно цену","Понятно, откуда и куда","Крупно, легко читать","Кнопки под рукой","Удобно позвонить","Ничего лишнего","Привычно"];
-var DISLIKE=["Мелко, трудно читать","Слишком много всего","Долго искать нужное","Кнопки далеко","Не видно цену","Непонятно, откуда и куда","Непривычно"];
-var KEY="wc-survey3";
+var E={"name": "entry.1433020472", "transport": "entry.1463450199", "tenure": "entry.1316740260", "events": "entry.1811349607", "story": "entry.1464482797", "like": "entry.10806726", "ryabit": "entry.620689173", "r_A": "entry.531343616", "r_F1": "entry.1648588287", "r_F2": "entry.2064450811", "r_F3": "entry.663186859", "screens": "entry.435121953", "choice": "entry.659315465", "why": "entry.401634462", "wish": "entry.809589968", "seconds": "entry.189630847", "ver": "entry.748552560", "raw": "entry.1637766922"};
+var SCREENS=[{"key": "A", "name": "Как сейчас", "img": "img/a.png", "base": true, "white": true, "w": 750, "h": 2104}, {"key": "F1", "name": "Ф1 Цветная шапка", "img": "img/f1.png", "bar": "img/f1bar.png", "white": true, "w": 750, "h": 1870, "bw": 750, "bh": 176}, {"key": "F2", "name": "Ф2 Карта", "img": "img/f2.png", "bar": "img/f2bar.png", "white": true, "w": 750, "h": 2212, "bw": 750, "bh": 149}, {"key": "F3", "name": "Ф3 По шагам", "img": "img/f3.png", "bar": "img/f3bar.png", "w": 750, "h": 1848, "bw": 750, "bh": 229}];
+var LIKE=["Сразу видно цену","Понятно, откуда и куда","Крупно, легко читать","Кнопки под рукой","Удобно позвонить","Спокойно, не рябит","Ничего лишнего","Привычно"];
+var DISLIKE=["Мелко, трудно читать","Слишком много всего","Долго искать нужное","Кнопки далеко","Не видно цену","Непонятно, откуда и куда","Пёстро, рябит","Непривычно"];
+var KEY="wc-survey4";
+var VERSION="Ф1–Ф3 (06.10)";
 var WORDS={3:"три",4:"четыре",5:"пять",6:"шесть",7:"семь"};
 var byKey={};SCREENS.forEach(function(s){byKey[s.key]=s;});
 function $(s){return document.querySelector(s);}
 function $$(s){return Array.prototype.slice.call(document.querySelectorAll(s));}
 function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
 function fresh(){var base=SCREENS.filter(function(s){return s.base;}).map(function(s){return s.key;});var rest=shuffle(SCREENS.filter(function(s){return !s.base;}).map(function(s){return s.key;}));
- return {rid:Math.random().toString(36).slice(2,10),started:new Date().toISOString(),order:base.concat(rest),name:"",transport:"",tenure:"",events:[],story:"",per:{},choice:"",why:"",ryabit:"",wish:"",step:"intro",finished:false};}
+ return {rid:Math.random().toString(36).slice(2,10),started:new Date().toISOString(),order:base.concat(rest),name:"",transport:"",tenure:"",events:[],story:"",per:{},choice:"",why:"",like:"",ryabit:"",wish:"",step:"intro",finished:false};}
 var S=fresh();
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 function load(){try{var r=JSON.parse(localStorage.getItem(KEY)||"null");if(r&&r.order&&r.order.length===SCREENS.length&&r.order.every(function(k){return byKey[k];}))return r;}catch(e){}return null;}
@@ -249,7 +261,7 @@ function show(step,push){S.step=step;save();var isView=step.indexOf("view:")===0
  $$(".page").forEach(function(p){p.classList.remove("on");});
  $("#viewer").classList.toggle("on",isView);document.body.classList.toggle("lock",isView);
  if(isView){openScreen(parseInt(step.split(":")[1],10));}
- else{leaveScreen();var id={intro:"p-intro",events:"p-events",how:"p-how",final:"p-final",done:"p-done"}[step]||"p-intro";$("#"+id).classList.add("on");if(step==="final")buildGrid();window.scrollTo(0,0);}
+ else{leaveScreen();var id={intro:"p-intro",events:"p-events",now:"p-now",how:"p-how",final:"p-final",done:"p-done"}[step]||"p-intro";$("#"+id).classList.add("on");if(step==="final")buildGrid();window.scrollTo(0,0);}
  if(push!==false){try{history.pushState({step:step},"");}catch(e){}}}
 window.addEventListener("popstate",function(ev){if(S.finished){show("done",false);return;}var st=ev.state&&ev.state.step;if(st){closeSheet(true);closeLightbox();show(st,false);}});
 
@@ -259,20 +271,23 @@ $("#f-story").addEventListener("input",function(){S.story=this.value;save();});
 $("#f-why").addEventListener("input",function(){S.why=this.value;save();});
 $("#f-wish").addEventListener("input",function(){S.wish=this.value;save();});
 $("#b-intro").onclick=function(){S.name=$("#f-name").value.trim();var ok=S.name.length>=3&&S.transport&&S.tenure;$("#e-intro").classList.toggle("on",!ok);if(ok)show("events");};
-$("#b-events").onclick=function(){S.story=$("#f-story").value.trim();var ok=(S.events||[]).length>0;$("#e-events").classList.toggle("on",!ok);if(ok)show("how");};
-$("#how-n").textContent=WORDS[SCREENS.length]||SCREENS.length;
+$("#b-events").onclick=function(){S.story=$("#f-story").value.trim();var ok=(S.events||[]).length>0;$("#e-events").classList.toggle("on",!ok);if(ok)show("now");};
+$("#b-now").onclick=function(){var ok=!!S.like&&!!S.ryabit;$("#e-now").classList.toggle("on",!ok);if(ok)show("how");};
+(function(){var n=SCREENS.length;$("#how-n").textContent=(WORDS[n]||n)+" "+(n>=2&&n<=4?"экрана":"экранов");})();
 $("#b-how").onclick=function(){show("view:0");};
 
 /* ---------- viewer ---------- */
 var cur=-1,curT=0,hintTimer=null;
+function putScreen(img,bar,sc){if(sc.w&&sc.h){img.width=sc.w;img.height=sc.h;}img.src=sc.img;
+ if(sc.bar){if(sc.bw&&sc.bh){bar.width=sc.bw;bar.height=sc.bh;}bar.src=sc.bar;bar.hidden=false;}else{bar.hidden=true;bar.removeAttribute("src");}}
 function rec(k){if(!S.per[k])S.per[k]={rating:0,chips:[],comment:"",seconds:0,scrolled:0};return S.per[k];}
 function leaveScreen(){if(cur>=0&&curT){var k=S.order[cur];rec(k).seconds=Math.round((rec(k).seconds||0)+(Date.now()-curT)/1000);save();}cur=-1;curT=0;}
 function openScreen(i){leaveScreen();closeSheet(true);cur=i;curT=Date.now();var k=S.order[i],sc=byKey[k],r=rec(k);
  $("#v-title").textContent="Экран "+(i+1)+" из "+S.order.length;
  var tag=$("#v-tag");tag.textContent=sc.base?"Так сейчас в приложении":"Новый вариант";tag.classList.toggle("now",!!sc.base);
  var pr=$("#v-prog");pr.innerHTML="";S.order.forEach(function(kk,j){var e=document.createElement("i");if(j===i)e.className="cur";else if(rec(kk).rating)e.className="done";pr.appendChild(e);});
- var scr=$("#v-scroll");scr.classList.toggle("white",!!sc.white);$("#v-img").src=sc.img;var bar=$("#v-bar");if(sc.bar){bar.src=sc.bar;bar.hidden=false;}else{bar.hidden=true;bar.removeAttribute("src");}
- scr.scrollTop=0;var hint=$("#v-hint");hint.classList.remove("off");hint.classList.toggle("withbar",!!sc.bar);
+ var scr=$("#v-scroll");scr.classList.toggle("white",!!sc.white);putScreen($("#v-img"),$("#v-bar"),sc);
+ scr.scrollTop=0;var hint=$("#v-hint");hint.classList.remove("off");hint.style.bottom=sc.bar?"calc(min(480px,100vw)*"+(sc.bh/sc.bw).toFixed(4)+" + 14px)":"";
  paintRate();$("#v-next").hidden=!r.rating;$("#v-next").textContent=(i===S.order.length-1)?"К выбору":"Дальше";
  var nx=S.order[i+1];if(nx){var im=new Image();im.src=byKey[nx].img;if(byKey[nx].bar){var ib=new Image();ib.src=byKey[nx].bar;}}}
 $("#v-scroll").addEventListener("scroll",function(){if(cur<0)return;var el=this;if(el.scrollTop>24)$("#v-hint").classList.add("off");var max=el.scrollHeight-el.clientHeight;var pct=max>0?Math.round(100*el.scrollTop/max):100;var r=rec(S.order[cur]);if(pct>(r.scrolled||0))r.scrolled=pct;},{passive:true});
@@ -298,17 +313,17 @@ function buildGrid(){var g=$("#grid");g.innerHTML="";S.order.forEach(function(k,
  d.innerHTML='<span class="th"><img alt="" src="'+sc.img+'"></span><span class="cap"><b>Экран '+(i+1)+'</b><small>'+(sc.base?"как сейчас · ":"")+(r.rating?"ваша оценка "+r.rating:"без оценки")+'</small></span>'+CHECK;
  var z=document.createElement("button");z.type="button";z.className="zoom";z.setAttribute("aria-label","Открыть экран целиком");z.innerHTML=ZOOM;z.onclick=function(ev){ev.stopPropagation();openLightbox(k,i);};d.appendChild(z);
  d.onclick=function(){S.choice=k;save();$$("#grid .pick").forEach(function(p){p.classList.remove("sel");});d.classList.add("sel");};g.appendChild(d);});}
-function openLightbox(k,i){var sc=byKey[k];$("#lb-title").textContent="Экран "+(i+1)+(sc.base?" · как сейчас":"");$("#lb-img").src=sc.img;var b=$("#lb-bar");if(sc.bar){b.src=sc.bar;b.hidden=false;}else{b.hidden=true;b.removeAttribute("src");}$("#lb-scroll").classList.toggle("white",!!sc.white);$("#lb-scroll").scrollTop=0;$("#lightbox").classList.add("on");document.body.classList.add("lock");}
+function openLightbox(k,i){var sc=byKey[k];$("#lb-title").textContent="Экран "+(i+1)+(sc.base?" · как сейчас":"");putScreen($("#lb-img"),$("#lb-bar"),sc);$("#lb-scroll").classList.toggle("white",!!sc.white);$("#lb-scroll").scrollTop=0;$("#lightbox").classList.add("on");document.body.classList.add("lock");}
 function closeLightbox(){if($("#lightbox").classList.contains("on")){$("#lightbox").classList.remove("on");document.body.classList.remove("lock");}}
 $("#lb-close").onclick=closeLightbox;
 
 function shown(k){return byKey[k].name+" (показан как Экран "+(S.order.indexOf(k)+1)+")";}
 function payload(){var fin=new Date();var p={rid:S.rid,started:S.started,finished:fin.toISOString(),durationSec:Math.round((fin-new Date(S.started))/1000),ua:navigator.userAgent,viewport:window.innerWidth+"x"+window.innerHeight,
- name:S.name,transport:S.transport,tenure:S.tenure,events:S.events,story:S.story,order:S.order.map(function(k){return byKey[k].name;}),ratings:{},screens:{},choice:S.choice,choiceLabel:S.choice?shown(S.choice):"",why:S.why,ryabit:S.ryabit,wish:S.wish};
+ name:S.name,transport:S.transport,tenure:S.tenure,events:S.events,story:S.story,order:S.order.map(function(k){return byKey[k].name;}),ratings:{},screens:{},choice:S.choice,choiceLabel:S.choice?shown(S.choice):"",why:S.why,like:S.like,ryabit:S.ryabit,wish:S.wish,version:VERSION};
  S.order.forEach(function(k,i){var r=rec(k);p.ratings[k]=r.rating||"";p.screens[byKey[k].name]={shownAs:i+1,rating:r.rating,chips:r.chips,comment:r.comment,seconds:r.seconds,scrolledPct:r.scrolled};});return p;}
 function screensText(p){return S.order.map(function(k,i){var r=rec(k);var parts=[];if(r.chips.length)parts.push(r.chips.join(", "));if(r.comment)parts.push("«"+r.comment+"»");return byKey[k].name+": "+(r.rating||"-")+(parts.length?" ("+parts.join("; ")+")":"");}).join(" | ");}
 var sending=false;
-$("#b-send").onclick=function(){if(sending)return;S.why=$("#f-why").value.trim();S.wish=$("#f-wish").value.trim();var ok=!!S.choice&&!!S.ryabit;$("#e-final").classList.toggle("on",!ok);if(!ok)return;save();
+$("#b-send").onclick=function(){if(sending)return;S.why=$("#f-why").value.trim();S.wish=$("#f-wish").value.trim();var ok=!!S.choice;$("#e-final").classList.toggle("on",!ok);if(!ok)return;save();
  var p=payload();try{localStorage.setItem(KEY+"-sent-"+p.rid,JSON.stringify(p));}catch(e){}
  function done(){S.finished=true;S.step="done";save();show("done",false);try{history.replaceState({step:"done"},"");}catch(e){}}
  if(!FORM_ACTION||FORM_ACTION.indexOf("__")===0){done();return;}
@@ -316,7 +331,7 @@ $("#b-send").onclick=function(){if(sending)return;S.why=$("#f-why").value.trim()
  var fd=new FormData();function add(key,val){if(E[key])fd.append(E[key],val==null?"":String(val));}
  add("name",p.name);add("transport",p.transport);add("tenure",p.tenure);add("events",(p.events||[]).join("; "));add("story",p.story);
  SCREENS.forEach(function(s){add("r_"+s.key,p.ratings[s.key]);});
- add("screens",screensText(p));add("choice",p.choiceLabel);add("why",p.why);add("ryabit",p.ryabit);add("wish",p.wish);add("seconds",p.durationSec);add("raw",JSON.stringify(p));
+ add("like",p.like);add("ryabit",p.ryabit);add("screens",screensText(p));add("choice",p.choiceLabel);add("why",p.why);add("wish",p.wish);add("seconds",p.durationSec);add("ver",VERSION);add("raw",JSON.stringify(p));
  fetch(FORM_ACTION,{method:"POST",mode:"no-cors",body:fd}).then(done).catch(function(){$("#e-send").classList.add("on");$("#b-send").disabled=false;sending=false;});};
 $("#b-again").onclick=function(){try{localStorage.removeItem(KEY);}catch(e){}S=fresh();sending=false;$("#b-send").disabled=false;paintAll();show("intro");};
 
