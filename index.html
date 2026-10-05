@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#ffffff">
-<meta name="wc-build" content="20261006-004511">
+<meta name="wc-build" content="20261006-023437">
 <title>Какой экран заказа удобнее</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
@@ -48,15 +48,15 @@ p{margin:0 0 12px;color:#3C3C43}
 .how div{display:flex;gap:12px;align-items:flex-start;font-weight:500}
 .how b{flex:0 0 28px;height:28px;border-radius:50%;background:#000;color:#fff;display:grid;place-items:center;font-size:14px}
 
-/* ---------- viewer ---------- */
-.viewer{display:none;position:fixed;inset:0;background:var(--page);flex-direction:column;z-index:10}
+/* ---------- viewer: экран целиком, как телефон в телефоне ---------- */
+.viewer{display:none;position:fixed;inset:0;background:#E7E8EC;flex-direction:column;z-index:10}
 .viewer.on{display:flex}
-.vwrap{display:flex;flex-direction:column;height:100%;width:100%;max-width:480px;margin:0 auto;background:var(--page);position:relative}
-.vtop{flex:0 0 auto;background:#fff;padding:calc(8px + env(safe-area-inset-top)) 12px 8px 6px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:6px}
+.vwrap{display:flex;flex-direction:column;height:100%;width:100%;max-width:560px;margin:0 auto;position:relative}
+.vtop{flex:0 0 auto;background:#fff;padding:calc(6px + env(safe-area-inset-top)) 10px 6px 4px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:6px}
 .vback{width:36px;height:36px;border:0;background:transparent;display:grid;place-items:center;border-radius:10px;flex:0 0 auto}
 .vback svg{width:22px;height:22px;stroke:#000;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.vhead{flex:1;min-width:0}
-.vrow{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.vhead{flex:1;min-width:0;overflow:hidden}
+.vrow{display:flex;align-items:center;gap:8px}
 .vrow b{font-size:15px;font-weight:700;white-space:nowrap}
 .tag{font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--blueT);color:var(--blue);white-space:nowrap}
 .tag.now{background:#FFF1E0;color:#F57C00}
@@ -64,21 +64,39 @@ p{margin:0 0 12px;color:#3C3C43}
 .vprog i{flex:1;height:4px;border-radius:2px;background:#E5E5EA}
 .vprog i.done{background:var(--green)}
 .vprog i.cur{background:#000}
-.vmid{flex:1 1 auto;min-height:0;position:relative}
+.vnextbtn{flex:0 0 auto;height:38px;padding:0 14px;border:0;border-radius:10px;background:#000;color:#fff;font-weight:700;font-size:15px;cursor:pointer}
+.vqline{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 12px 0;font-size:clamp(13px,4.1vw,16px);font-weight:700;line-height:1.2;white-space:nowrap}
+.vzoom{flex:0 0 auto;display:inline-flex;align-items:center;gap:5px;height:32px;padding:0 11px;border:0;border-radius:999px;background:#fff;font-size:13px;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.14);cursor:pointer}
+.vzoom svg{width:15px;height:15px;stroke:#000;fill:none;stroke-width:2.2;stroke-linecap:round}
+.vbody{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 10px calc(8px + env(safe-area-inset-bottom));gap:8px}
+.vbody.side{flex-direction:row;gap:10px}
+.dev{position:relative;flex:0 0 auto;background:#fff;overflow:hidden;border-radius:22px;box-shadow:0 0 0 1px rgba(0,0,0,.16),0 6px 22px rgba(0,0,0,.18)}
+.dev.gray{background:var(--page)}
+.dscroll{position:absolute;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;scrollbar-width:none}
+.dscroll::-webkit-scrollbar{display:none}
+.dscroll img.full{width:100%;height:auto;display:block}
+.dbar{position:absolute;left:0;right:0;bottom:0;width:100%;height:auto;display:block;filter:drop-shadow(0 -2px 6px rgba(0,0,0,.14));pointer-events:none;z-index:2}
+.vhint{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);background:rgba(0,0,0,.8);color:#fff;font-size:12px;font-weight:600;padding:6px 11px;border-radius:999px;white-space:nowrap;pointer-events:none;transition:opacity .25s;z-index:3}
+.vhint.off{opacity:0}
+.vratebox{flex:0 0 auto;width:100%;max-width:420px;display:grid;grid-template-columns:1fr 1fr;row-gap:4px}
+.vratebox .rate{grid-column:1/3;grid-row:1}
+.rcap{font-size:12px;color:var(--lbl);font-weight:500;line-height:1.15}
+.rcap.lo{grid-column:1;grid-row:2;text-align:left}
+.rcap.hi{grid-column:2;grid-row:2;text-align:right}
+.rate{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.rate button{height:46px;border-radius:12px;border:0;background:var(--plate);font-size:19px;font-weight:700;cursor:pointer;padding:0}
+.vratebox .rate button{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.rate button.sel,.vratebox .rate button.sel{background:#000;color:#fff}
+.vbody.side .vratebox{width:58px;display:flex;flex-direction:column;justify-content:center;gap:7px}
+.vbody.side .vratebox .rate{display:flex;flex-direction:column-reverse;gap:8px}
+.vbody.side .vratebox .rate button{height:52px}
+.vbody.side .rcap{text-align:center;font-size:11px}
 .vscroll{position:absolute;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;background:var(--page)}
 .vscroll.white{background:#fff}
 .vscroll img.full{width:100%;height:auto;display:block}
 .vscroll img.barimg{position:sticky;bottom:0;width:100%;height:auto;display:block;margin-top:0;filter:drop-shadow(0 -3px 8px rgba(0,0,0,.10));z-index:2}
-.vhint{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);background:rgba(0,0,0,.82);color:#fff;font-size:14px;font-weight:600;padding:9px 14px;border-radius:999px;white-space:nowrap;pointer-events:none;transition:opacity .25s;z-index:3}
-.vhint.off{opacity:0}
-.vbottom{flex:0 0 auto;background:#fff;padding:10px 14px calc(12px + env(safe-area-inset-bottom));box-shadow:0 -2px 12px rgba(0,0,0,.08);position:relative;z-index:4}
+.vmid{flex:1 1 auto;min-height:0;position:relative}
 .vq{font-size:15px;font-weight:700;margin-bottom:8px;display:flex;justify-content:space-between;align-items:baseline;gap:8px;white-space:nowrap}
-.vq span{font-size:12px;font-weight:500;color:var(--lbl)}
-.rate{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
-.rate button{height:50px;border-radius:12px;border:0;background:var(--plate);font-size:19px;font-weight:700;cursor:pointer}
-.rate button.sel{background:#000;color:#fff}
-.vcap{display:flex;justify-content:space-between;font-size:12px;color:var(--lbl);margin-top:5px;font-weight:500}
-.vnext{margin-top:10px!important;height:50px}
 .backdrop{position:absolute;inset:0;background:rgba(0,0,0,.4);z-index:5}
 .sheet{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:20px 20px 0 0;padding:8px 16px calc(14px + env(safe-area-inset-bottom));z-index:6;max-height:86%;overflow-y:auto;box-shadow:0 -8px 30px rgba(0,0,0,.18)}
 .grab{width:36px;height:4px;border-radius:2px;background:#D1D1D6;margin:0 auto 12px}
@@ -93,8 +111,9 @@ p{margin:0 0 12px;color:#3C3C43}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
 .pick{border-radius:16px;overflow:hidden;background:#fff;border:2.5px solid #E5E5EA;position:relative;padding:0;text-align:left;cursor:pointer;display:block;width:100%}
 .pick.sel{border-color:#000}
-.pick .th{aspect-ratio:375/430;overflow:hidden;background:var(--page);display:block}
-.pick .th img{width:100%;display:block}
+.pick .th{aspect-ratio:375/812;overflow:hidden;background:var(--page);display:block;position:relative}
+.pick .th img.full{width:100%;display:block}
+.pick .th img.thbar{position:absolute;left:0;right:0;bottom:0;width:100%;display:block;filter:drop-shadow(0 -1px 3px rgba(0,0,0,.14))}
 .pick .cap{padding:8px 10px 10px;display:block}
 .pick .cap b{display:block;font-size:15px;font-weight:700}
 .pick .cap small{display:block;color:var(--lbl);font-weight:500;font-size:13px;margin-top:1px}
@@ -108,7 +127,6 @@ p{margin:0 0 12px;color:#3C3C43}
 .lb-wrap{display:flex;flex-direction:column;height:100%;width:100%;max-width:480px;margin:0 auto;position:relative}
 .lb-top{flex:0 0 auto;background:#fff;padding:calc(10px + env(safe-area-inset-top)) 14px 10px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);font-weight:700}
 .lb-top button{border:0;background:#000;color:#fff;border-radius:10px;height:38px;padding:0 16px;font-weight:700;font-size:15px}
-@media (max-height:640px){.rate button{height:44px}.vq{margin-bottom:6px}.vbottom{padding-top:8px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -166,8 +184,8 @@ p{margin:0 0 12px;color:#3C3C43}
  <h2>Сейчас покажем <span id="how-n">четыре экрана</span></h2>
  <p>Это один и тот же новый заказ. Первый экран такой, как сейчас в приложении, остальные новые.</p>
  <div class="how">
-  <div><b>1</b><span>Листайте экран вниз, как в приложении.</span></div>
-  <div><b>2</b><span>Поставьте оценку от 1 до 5 внизу: насколько вам удобно.</span></div>
+  <div><b>1</b><span>Экран показан целиком, как на телефоне. Его можно листать, а кнопка «Крупнее» увеличит.</span></div>
+  <div><b>2</b><span>Поставьте оценку от 1 до 5: насколько вам удобно.</span></div>
   <div><b>3</b><span>В конце выберите самый удобный.</span></div>
  </div>
  <button class="btn primary" id="b-how">Показать первый экран</button>
@@ -178,19 +196,23 @@ p{margin:0 0 12px;color:#3C3C43}
   <div class="vtop">
    <button class="vback" id="v-back" aria-label="Назад"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
    <div class="vhead">
-    <div class="vrow"><b id="v-title">Экран 1 из 4</b><span class="tag" id="v-tag">Новый вариант</span></div>
+    <div class="vrow"><b id="v-title">Экран 1 из 4</b><span class="tag" id="v-tag">новый</span></div>
     <div class="vprog" id="v-prog"></div>
    </div>
+   <button type="button" class="vnextbtn" id="v-next" hidden>Дальше</button>
   </div>
-  <div class="vmid">
-   <div class="vscroll" id="v-scroll"><img class="full" id="v-img" alt=""><img class="barimg" id="v-bar" alt="" hidden></div>
-   <div class="vhint" id="v-hint">Листайте экран вниз ↓</div>
-  </div>
-  <div class="vbottom">
-   <div class="vq">Насколько удобен этот экран?<span>от 1 до 5</span></div>
-   <div class="rate" id="v-rate"><button type="button">1</button><button type="button">2</button><button type="button">3</button><button type="button">4</button><button type="button">5</button></div>
-   <div class="vcap"><span>неудобно</span><span>очень удобно</span></div>
-   <button class="btn primary vnext" id="v-next" hidden>Дальше</button>
+  <div class="vqline"><span>Насколько удобен экран?</span><button type="button" class="vzoom" id="v-zoom"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.8-3.8"/></svg>Крупнее</button></div>
+  <div class="vbody" id="v-body">
+   <div class="dev" id="v-dev">
+    <div class="dscroll" id="v-scroll"><img class="full" id="v-img" alt=""><div id="v-pad"></div></div>
+    <img class="dbar" id="v-bar" alt="" hidden>
+    <div class="vhint" id="v-hint">Листайте ↓</div>
+   </div>
+   <div class="vratebox" id="v-ratebox">
+    <span class="rcap hi">очень удобно</span>
+    <div class="rate" id="v-rate"><button type="button">1</button><button type="button">2</button><button type="button">3</button><button type="button">4</button><button type="button">5</button></div>
+    <span class="rcap lo">неудобно</span>
+   </div>
   </div>
   <div class="backdrop" id="v-backdrop" hidden></div>
   <div class="sheet" id="v-sheet" hidden>
@@ -231,12 +253,12 @@ p{margin:0 0 12px;color:#3C3C43}
 (function(){
 "use strict";
 var FORM_ACTION="https://docs.google.com/forms/d/e/1FAIpQLSdamXvF4miEZs1m4J5Uqi57x-DYyqc1l4xskTmM5qVJPabpvw/formResponse";
-var E={"name": "entry.1433020472", "transport": "entry.1463450199", "tenure": "entry.1316740260", "events": "entry.1811349607", "story": "entry.1464482797", "like": "entry.10806726", "ryabit": "entry.620689173", "r_A": "entry.531343616", "r_F1": "entry.1648588287", "r_F2": "entry.2064450811", "r_F3": "entry.663186859", "screens": "entry.435121953", "choice": "entry.659315465", "why": "entry.401634462", "wish": "entry.809589968", "seconds": "entry.189630847", "ver": "entry.748552560", "raw": "entry.1637766922"};
-var SCREENS=[{"key": "A", "name": "Как сейчас", "img": "img/a.png", "base": true, "white": true, "w": 750, "h": 2104}, {"key": "F1", "name": "Ф1 Цветная шапка", "img": "img/f1.png", "bar": "img/f1bar.png", "white": true, "w": 750, "h": 1890, "bw": 750, "bh": 176}, {"key": "F2", "name": "Ф2 Карта", "img": "img/f2.png", "bar": "img/f2bar.png", "white": true, "like": ["Удобно, что есть карта"], "dislike": ["Карта занимает место"], "w": 750, "h": 2174, "bw": 750, "bh": 157}, {"key": "F3", "name": "Ф3 По шагам", "img": "img/f3.png", "bar": "img/f3bar.png", "w": 750, "h": 1960, "bw": 750, "bh": 249}];
+var E={"name": "entry.1433020472", "transport": "entry.1463450199", "tenure": "entry.1316740260", "events": "entry.1811349607", "story": "entry.1464482797", "like": "entry.10806726", "ryabit": "entry.620689173", "r_A": "entry.531343616", "screens": "entry.435121953", "choice": "entry.659315465", "why": "entry.401634462", "wish": "entry.809589968", "seconds": "entry.189630847", "ver": "entry.748552560", "raw": "entry.1637766922", "r_D3": "entry.1648588287", "r_D5": "entry.2064450811", "r_D4": "entry.663186859"};
+var SCREENS=[{"key": "A", "name": "Как сейчас", "img": "img/a.png", "base": true, "white": true, "w": 750, "h": 2104}, {"key": "D3", "name": "Д3 Цветная шапка", "img": "img/d3.png", "bar": "img/d3bar.png", "white": true, "w": 750, "h": 1960, "bw": 750, "bh": 192}, {"key": "D5", "name": "Д5 Карта", "img": "img/d5.png", "bar": "img/d5bar.png", "like": ["Удобно, что есть карта"], "dislike": ["Карта занимает место"], "w": 750, "h": 2518, "bw": 750, "bh": 153}, {"key": "D4", "name": "Д4 Билет", "img": "img/d4.png", "w": 750, "h": 2088}];
 var LIKE=["Сразу видно цену","Понятно, откуда и куда","Крупно, легко читать","Кнопки под рукой","Удобно позвонить","Спокойно, не рябит","Ничего лишнего","Привычно"];
 var DISLIKE=["Мелко, трудно читать","Слишком много всего","Долго искать нужное","Кнопки далеко","Не видно цену","Непонятно, откуда и куда","Пёстро, рябит","Непривычно"];
-var KEY="wc-survey4";
-var VERSION="Ф1–Ф3 (06.10)";
+var KEY="wc-survey5";
+var VERSION="Д3 Д5 Д4 (06.10)";
 var WORDS={3:"три",4:"четыре",5:"пять",6:"шесть",7:"семь"};
 var byKey={};SCREENS.forEach(function(s){byKey[s.key]=s;});
 function $(s){return document.querySelector(s);}
@@ -283,13 +305,21 @@ function putScreen(img,bar,sc){if(sc.w&&sc.h){img.width=sc.w;img.height=sc.h;}im
  if(sc.bar){if(sc.bw&&sc.bh){bar.width=sc.bw;bar.height=sc.bh;}bar.src=sc.bar;bar.hidden=false;}else{bar.hidden=true;bar.removeAttribute("src");}}
 function rec(k){if(!S.per[k])S.per[k]={rating:0,chips:[],comment:"",seconds:0,scrolled:0};return S.per[k];}
 function leaveScreen(){if(cur>=0&&curT){var k=S.order[cur];rec(k).seconds=Math.round((rec(k).seconds||0)+(Date.now()-curT)/1000);save();}cur=-1;curT=0;}
+function fitDevice(){if(cur<0)return;var body=$("#v-body"),dev=$("#v-dev"),sc=byKey[S.order[cur]];var cs=getComputedStyle(body);
+ var W=body.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight),H=body.clientHeight-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom);if(W<50||H<50)return;
+ var sA=Math.min(W/375,(H-65-8)/812),sB=Math.min((W-58-10)/375,H/812);var side=sB>sA*1.04;body.classList.toggle("side",side);
+ var s=Math.max(0.3,Math.min(1,side?sB:sA));var dw=Math.floor(375*s),dh=Math.floor(812*s);
+ dev.style.width=dw+"px";dev.style.height=dh+"px";dev.style.borderRadius=Math.round(30*s)+"px";
+ var barH=sc.bar?Math.round(dw*sc.bh/sc.bw):0;$("#v-pad").style.height=barH+"px";$("#v-hint").style.bottom=(barH+8)+"px";}
+window.addEventListener("resize",fitDevice);if(window.visualViewport)window.visualViewport.addEventListener("resize",fitDevice);
 function openScreen(i){leaveScreen();closeSheet(true);cur=i;curT=Date.now();var k=S.order[i],sc=byKey[k],r=rec(k);
  $("#v-title").textContent="Экран "+(i+1)+" из "+S.order.length;
- var tag=$("#v-tag");tag.textContent=sc.base?"Так сейчас в приложении":"Новый вариант";tag.classList.toggle("now",!!sc.base);
+ var tag=$("#v-tag");tag.textContent=sc.base?"как сейчас":"новый";tag.classList.toggle("now",!!sc.base);
  var pr=$("#v-prog");pr.innerHTML="";S.order.forEach(function(kk,j){var e=document.createElement("i");if(j===i)e.className="cur";else if(rec(kk).rating)e.className="done";pr.appendChild(e);});
- var scr=$("#v-scroll");scr.classList.toggle("white",!!sc.white);putScreen($("#v-img"),$("#v-bar"),sc);
- scr.scrollTop=0;var hint=$("#v-hint");hint.classList.remove("off");hint.style.bottom=sc.bar?"calc(min(480px,100vw)*"+(sc.bh/sc.bw).toFixed(4)+" + 14px)":"";
+ $("#v-dev").classList.toggle("gray",!sc.white);putScreen($("#v-img"),$("#v-bar"),sc);
+ $("#v-scroll").scrollTop=0;$("#v-hint").classList.remove("off");
  paintRate();$("#v-next").hidden=!r.rating;$("#v-next").textContent=(i===S.order.length-1)?"К выбору":"Дальше";
+ fitDevice();setTimeout(fitDevice,60);
  var nx=S.order[i+1];if(nx){var im=new Image();im.src=byKey[nx].img;if(byKey[nx].bar){var ib=new Image();ib.src=byKey[nx].bar;}}}
 $("#v-scroll").addEventListener("scroll",function(){if(cur<0)return;var el=this;if(el.scrollTop>24)$("#v-hint").classList.add("off");var max=el.scrollHeight-el.clientHeight;var pct=max>0?Math.round(100*el.scrollTop/max):100;var r=rec(S.order[cur]);if(pct>(r.scrolled||0))r.scrolled=pct;},{passive:true});
 function paintRate(){if(cur<0)return;var r=rec(S.order[cur]);["#v-rate","#sh-rate"].forEach(function(sel){$$(sel+" button").forEach(function(b,j){b.classList.toggle("sel",r.rating===j+1);});});}
@@ -306,16 +336,17 @@ $("#sh-back").onclick=function(){closeSheet();};$("#v-backdrop").onclick=functio
 function next(){closeSheet();var i=cur;if(i<S.order.length-1)show("view:"+(i+1));else show("final");}
 $("#sh-next").onclick=next;$("#v-next").onclick=next;
 $("#v-back").onclick=function(){closeSheet();if(cur>0)show("view:"+(cur-1));else show("how");};
+$("#v-zoom").onclick=function(){if(cur>=0)openLightbox(S.order[cur],cur);};
 
 /* ---------- final ---------- */
 var CHECK='<span class="check"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>';
 var ZOOM='<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.8-3.8"/></svg>';
 function buildGrid(){var g=$("#grid");g.innerHTML="";S.order.forEach(function(k,i){var sc=byKey[k],r=rec(k);var d=document.createElement("div");d.className="pick"+(S.choice===k?" sel":"");d.setAttribute("role","button");d.tabIndex=0;
- d.innerHTML='<span class="th"><img alt="" src="'+sc.img+'"></span><span class="cap"><b>Экран '+(i+1)+'</b><small>'+(sc.base?"как сейчас · ":"")+(r.rating?"ваша оценка "+r.rating:"без оценки")+'</small></span>'+CHECK;
+ d.innerHTML='<span class="th"><img class="full" alt="" src="'+sc.img+'">'+(sc.bar?'<img class="thbar" alt="" src="'+sc.bar+'">':'')+'</span><span class="cap"><b>Экран '+(i+1)+'</b><small>'+(sc.base?"как сейчас · ":"")+(r.rating?"ваша оценка "+r.rating:"без оценки")+'</small></span>'+CHECK;
  var z=document.createElement("button");z.type="button";z.className="zoom";z.setAttribute("aria-label","Открыть экран целиком");z.innerHTML=ZOOM;z.onclick=function(ev){ev.stopPropagation();openLightbox(k,i);};d.appendChild(z);
  d.onclick=function(){S.choice=k;save();$$("#grid .pick").forEach(function(p){p.classList.remove("sel");});d.classList.add("sel");};g.appendChild(d);});}
 function openLightbox(k,i){var sc=byKey[k];$("#lb-title").textContent="Экран "+(i+1)+(sc.base?" · как сейчас":"");putScreen($("#lb-img"),$("#lb-bar"),sc);$("#lb-scroll").classList.toggle("white",!!sc.white);$("#lb-scroll").scrollTop=0;$("#lightbox").classList.add("on");document.body.classList.add("lock");}
-function closeLightbox(){if($("#lightbox").classList.contains("on")){$("#lightbox").classList.remove("on");document.body.classList.remove("lock");}}
+function closeLightbox(){if($("#lightbox").classList.contains("on")){$("#lightbox").classList.remove("on");document.body.classList.toggle("lock",$("#viewer").classList.contains("on"));}}
 $("#lb-close").onclick=closeLightbox;
 
 function shown(k){return byKey[k].name+" (показан как Экран "+(S.order.indexOf(k)+1)+")";}
