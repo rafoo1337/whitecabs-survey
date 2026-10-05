@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#ffffff">
+<meta name="wc-build" content="20261006-004511">
 <title>Какой экран заказа удобнее</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
@@ -231,7 +232,7 @@ p{margin:0 0 12px;color:#3C3C43}
 "use strict";
 var FORM_ACTION="https://docs.google.com/forms/d/e/1FAIpQLSdamXvF4miEZs1m4J5Uqi57x-DYyqc1l4xskTmM5qVJPabpvw/formResponse";
 var E={"name": "entry.1433020472", "transport": "entry.1463450199", "tenure": "entry.1316740260", "events": "entry.1811349607", "story": "entry.1464482797", "like": "entry.10806726", "ryabit": "entry.620689173", "r_A": "entry.531343616", "r_F1": "entry.1648588287", "r_F2": "entry.2064450811", "r_F3": "entry.663186859", "screens": "entry.435121953", "choice": "entry.659315465", "why": "entry.401634462", "wish": "entry.809589968", "seconds": "entry.189630847", "ver": "entry.748552560", "raw": "entry.1637766922"};
-var SCREENS=[{"key": "A", "name": "Как сейчас", "img": "img/a.png", "base": true, "white": true, "w": 750, "h": 2104}, {"key": "F1", "name": "Ф1 Цветная шапка", "img": "img/f1.png", "bar": "img/f1bar.png", "white": true, "w": 750, "h": 1870, "bw": 750, "bh": 176}, {"key": "F2", "name": "Ф2 Карта", "img": "img/f2.png", "bar": "img/f2bar.png", "white": true, "w": 750, "h": 2212, "bw": 750, "bh": 149}, {"key": "F3", "name": "Ф3 По шагам", "img": "img/f3.png", "bar": "img/f3bar.png", "w": 750, "h": 1848, "bw": 750, "bh": 229}];
+var SCREENS=[{"key": "A", "name": "Как сейчас", "img": "img/a.png", "base": true, "white": true, "w": 750, "h": 2104}, {"key": "F1", "name": "Ф1 Цветная шапка", "img": "img/f1.png", "bar": "img/f1bar.png", "white": true, "w": 750, "h": 1890, "bw": 750, "bh": 176}, {"key": "F2", "name": "Ф2 Карта", "img": "img/f2.png", "bar": "img/f2bar.png", "white": true, "like": ["Удобно, что есть карта"], "dislike": ["Карта занимает место"], "w": 750, "h": 2174, "bw": 750, "bh": 157}, {"key": "F3", "name": "Ф3 По шагам", "img": "img/f3.png", "bar": "img/f3bar.png", "w": 750, "h": 1960, "bw": 750, "bh": 249}];
 var LIKE=["Сразу видно цену","Понятно, откуда и куда","Крупно, легко читать","Кнопки под рукой","Удобно позвонить","Спокойно, не рябит","Ничего лишнего","Привычно"];
 var DISLIKE=["Мелко, трудно читать","Слишком много всего","Долго искать нужное","Кнопки далеко","Не видно цену","Непонятно, откуда и куда","Пёстро, рябит","Непривычно"];
 var KEY="wc-survey4";
@@ -296,7 +297,7 @@ function setRating(n){var r=rec(S.order[cur]);var was=r.rating;if(was&&((was>=4)
 ["#v-rate","#sh-rate"].forEach(function(sel){$$(sel+" button").forEach(function(b,j){b.addEventListener("click",function(){setRating(j+1);});});});
 function openSheet(){var r=rec(S.order[cur]);var good=r.rating>=4;$("#sh-title").textContent="Ваша оценка: "+r.rating+" из 5";
  $("#sh-q").innerHTML=(good?"Что понравилось?":"Что мешает?")+"<small>Можно несколько или пропустить</small>";
- var box=$("#sh-chips");box.innerHTML="";(good?LIKE:DISLIKE).forEach(function(t){var b=document.createElement("button");b.type="button";b.className="chip"+(r.chips.indexOf(t)>=0?" sel":"");b.textContent=t;b.onclick=function(){var i=r.chips.indexOf(t);if(i>=0)r.chips.splice(i,1);else r.chips.push(t);b.classList.toggle("sel");save();};box.appendChild(b);});
+ var box=$("#sh-chips");box.innerHTML="";var sc=byKey[S.order[cur]];(good?(sc.like||[]).concat(LIKE):(sc.dislike||[]).concat(DISLIKE)).forEach(function(t){var b=document.createElement("button");b.type="button";b.className="chip"+(r.chips.indexOf(t)>=0?" sel":"");b.textContent=t;b.onclick=function(){var i=r.chips.indexOf(t);if(i>=0)r.chips.splice(i,1);else r.chips.push(t);b.classList.toggle("sel");save();};box.appendChild(b);});
  $("#sh-comment").value=r.comment||"";$("#sh-next").textContent=(cur===S.order.length-1)?"К выбору":"Дальше";
  $("#v-backdrop").hidden=false;$("#v-sheet").hidden=false;$("#v-sheet").scrollTop=0;}
 function closeSheet(silent){if(cur>=0&&!$("#v-sheet").hidden){rec(S.order[cur]).comment=$("#sh-comment").value.trim();save();}$("#v-backdrop").hidden=true;$("#v-sheet").hidden=true;}
