@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#ffffff">
-<meta name="wc-build" content="20261006-185912">
+<meta name="wc-build" content="20261006-224517">
 <title>Какой экран заказа удобнее</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
@@ -127,13 +127,31 @@ p{margin:0 0 12px;color:#3C3C43}
 .lb-wrap{display:flex;flex-direction:column;height:100%;width:100%;max-width:480px;margin:0 auto;position:relative}
 .lb-top{flex:0 0 auto;background:#fff;padding:calc(10px + env(safe-area-inset-top)) 14px 10px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);font-weight:700}
 .lb-top button{border:0;background:#000;color:#fff;border-radius:10px;height:38px;padding:0 16px;font-weight:700;font-size:15px}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.ta.big{min-height:168px}
+.fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:50;display:none}
+.done{text-align:center;padding-top:28px}
+.done h1{margin:20px 0 10px}
+.done p{max-width:340px;margin:0 auto 12px}
+.badge{width:96px;height:96px;border-radius:50%;background:var(--green);display:grid;place-items:center;margin:0 auto;box-shadow:0 10px 30px rgba(34,162,72,.35)}
+.badge svg{width:46px;height:46px;fill:none;stroke:#fff;stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round}
+.badge path{stroke-dasharray:36;stroke-dashoffset:0}
+.facts{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:18px 0 6px}
+.fact{background:var(--plate);border-radius:14px;padding:12px 14px;min-width:132px}
+.fact b{display:block;font-size:22px;font-weight:800;letter-spacing:-.01em;line-height:1.15}
+.fact span{font-size:14px;color:var(--lbl);font-weight:500}
+.page.celebrate .badge{animation:pop .55s cubic-bezier(.2,1.5,.4,1) both}
+.page.celebrate .badge path{animation:draw .45s .3s ease-out both}
+.page.celebrate .done h1,.page.celebrate .done p,.page.celebrate .facts{animation:rise .5s .35s ease-out both}
+@keyframes pop{from{transform:scale(.2);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes draw{from{stroke-dashoffset:36}to{stroke-dashoffset:0}}
+@keyframes rise{from{transform:translateY(12px);opacity:0}to{transform:translateY(0);opacity:1}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
 
 <section class="page on" id="p-intro">
- <div class="step">Шаг 1 из 5</div>
+ <div class="step">Шаг 1 из 6</div>
  <h1>Какой экран заказа удобнее?</h1>
  <p>Выбираем новый экран заказа и хотим сделать его удобным для вас. Опрос займёт 3–4 минуты.</p>
  <div class="q">Имя и фамилия</div>
@@ -148,7 +166,7 @@ p{margin:0 0 12px;color:#3C3C43}
 </section>
 
 <section class="page" id="p-events">
- <div class="step">Шаг 2 из 5</div>
+ <div class="step">Шаг 2 из 6</div>
  <h2>Вспомните последние 10 заказов</h2>
  <div class="q" style="margin-top:10px">Что из этого случалось с вами на экране заказа?<small>Отметьте всё, что было</small></div>
  <div class="chips" data-key="events" data-multi="1" data-none="Ничего из этого">
@@ -168,7 +186,7 @@ p{margin:0 0 12px;color:#3C3C43}
 </section>
 
 <section class="page" id="p-now">
- <div class="step">Шаг 3 из 5</div>
+ <div class="step">Шаг 3 из 6</div>
  <h2>Экран заказа сейчас</h2>
  <p class="muted">Сначала два вопроса про экран, который сейчас в приложении.</p>
  <div class="q" style="margin-top:14px">Вам нравится экран заказа, который сейчас в приложении?</div>
@@ -180,7 +198,7 @@ p{margin:0 0 12px;color:#3C3C43}
 </section>
 
 <section class="page" id="p-how">
- <div class="step">Шаг 4 из 5</div>
+ <div class="step">Шаг 4 из 6</div>
  <h2>Сейчас покажем <span id="how-n">четыре экрана</span></h2>
  <p>Это один и тот же новый заказ. Первый экран такой, как сейчас в приложении, остальные новые.</p>
  <div class="how">
@@ -228,7 +246,7 @@ p{margin:0 0 12px;color:#3C3C43}
 </section>
 
 <section class="page" id="p-final">
- <div class="step">Шаг 5 из 5</div>
+ <div class="step">Шаг 5 из 6</div>
  <h2>Какой экран самый удобный?</h2>
  <p class="muted">Нажмите на экран, чтобы выбрать. Лупа открывает его целиком.</p>
  <div class="grid" id="grid"></div>
@@ -237,15 +255,31 @@ p{margin:0 0 12px;color:#3C3C43}
  <div class="q">Что бы вы добавили или убрали на экране заказа?<small>Необязательно</small></div>
  <textarea class="ta" id="f-wish" placeholder="Одна вещь, которую стоит изменить"></textarea>
  <div class="err" id="e-final">Нажмите на экран, который удобнее</div>
- <button class="btn primary" id="b-send">Отправить</button>
+ <button class="btn primary" id="b-final">Дальше</button>
+</section>
+
+<section class="page" id="p-extra">
+ <div class="step">Шаг 6 из 6</div>
+ <h2>Что бы вы ещё хотели улучшить?</h2>
+ <p>Не только в заказах. Слоты, оплата, профиль, поддержка, что угодно в приложении и в работе.</p>
+ <p>Не стесняйтесь, пишите как есть и сколько хотите. Прочитаем каждое сообщение.</p>
+ <textarea class="ta big" id="f-feedback" placeholder="Что неудобно, чего не хватает, что раздражает"></textarea>
+ <p class="muted" style="margin-top:10px">Можно оставить пустым и сразу отправить.</p>
+ <button class="btn primary" id="b-send">Отправить ответы</button>
  <div class="err" id="e-send">Не удалось отправить. Проверьте интернет и нажмите ещё раз</div>
 </section>
 
 <section class="page" id="p-done">
- <h1>Спасибо!</h1>
- <p>Ответ отправлен. Когда соберём ответы, расскажем, что меняем в экране заказа.</p>
- <button class="btn ghost" id="b-again" style="margin-top:20px">Пройти ещё раз</button>
+ <div class="done">
+  <div class="badge"><svg viewBox="0 0 48 48"><path d="M12 25l9 9 16-19"/></svg></div>
+  <h1>Спасибо, вы нам помогли!</h1>
+  <p>Ваши ответы уже у команды, которая делает приложение. По ним выберем экран заказа и поправим то, что мешает в работе.</p>
+  <div class="facts"><div class="fact"><b id="d-n">4</b><span>экрана вы оценили</span></div><div class="fact"><b id="d-pick">Экран 1</b><span>ваш выбор</span></div></div>
+  <p class="muted">Когда соберём ответы всех курьеров, расскажем, что меняем.</p>
+ </div>
+ <button class="btn ghost" id="b-again" style="margin-top:14px">Пройти ещё раз</button>
 </section>
+<canvas class="fx" id="fx" aria-hidden="true"></canvas>
 
 <div class="lightbox" id="lightbox"><div class="lb-wrap"><div class="lb-top"><span id="lb-title">Экран</span><button id="lb-close">Закрыть</button></div><div class="vmid"><div class="vscroll" id="lb-scroll"><img class="full" id="lb-img" alt=""><img class="barimg" id="lb-bar" alt="" hidden></div></div></div></div>
 
@@ -253,7 +287,7 @@ p{margin:0 0 12px;color:#3C3C43}
 (function(){
 "use strict";
 var FORM_ACTION="https://docs.google.com/forms/d/e/1FAIpQLSdamXvF4miEZs1m4J5Uqi57x-DYyqc1l4xskTmM5qVJPabpvw/formResponse";
-var E={"name": "entry.1433020472", "transport": "entry.1463450199", "tenure": "entry.1316740260", "events": "entry.1811349607", "story": "entry.1464482797", "like": "entry.10806726", "ryabit": "entry.620689173", "r_A": "entry.531343616", "screens": "entry.435121953", "choice": "entry.659315465", "why": "entry.401634462", "wish": "entry.809589968", "seconds": "entry.189630847", "ver": "entry.748552560", "raw": "entry.1637766922", "r_D3": "entry.1648588287", "r_D5": "entry.2064450811", "r_D4": "entry.663186859"};
+var E={"name": "entry.1433020472", "transport": "entry.1463450199", "tenure": "entry.1316740260", "events": "entry.1811349607", "story": "entry.1464482797", "like": "entry.10806726", "ryabit": "entry.620689173", "r_A": "entry.531343616", "screens": "entry.435121953", "choice": "entry.659315465", "why": "entry.401634462", "wish": "entry.809589968", "seconds": "entry.189630847", "ver": "entry.748552560", "raw": "entry.1637766922", "r_D3": "entry.1648588287", "r_D5": "entry.2064450811", "r_D4": "entry.663186859", "feedback": "entry.505201090"};
 var SCREENS=[{"key": "A", "name": "Как сейчас", "img": "img/a.png", "base": true, "white": true, "w": 750, "h": 2104}, {"key": "D3", "name": "Д3 Цветная шапка", "img": "img/d3.png", "bar": "img/d3bar.png", "white": true, "w": 750, "h": 1682, "bw": 750, "bh": 192}, {"key": "D5", "name": "Д5 Карта", "img": "img/d5.png", "bar": "img/d5bar.png", "like": ["Удобно, что есть карта"], "dislike": ["Карта занимает место"], "w": 750, "h": 2272, "bw": 750, "bh": 153}, {"key": "D4", "name": "Д4 Билет", "img": "img/d4.png", "w": 750, "h": 1986}];
 var LIKE=["Сразу видно цену","Понятно, откуда и куда","Крупно, легко читать","Кнопки под рукой","Удобно позвонить","Спокойно, не рябит","Ничего лишнего","Привычно"];
 var DISLIKE=["Мелко, трудно читать","Слишком много всего","Долго искать нужное","Кнопки далеко","Не видно цену","Непонятно, откуда и куда","Пёстро, рябит","Непривычно"];
@@ -265,7 +299,7 @@ function $(s){return document.querySelector(s);}
 function $$(s){return Array.prototype.slice.call(document.querySelectorAll(s));}
 function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
 function fresh(){var base=SCREENS.filter(function(s){return s.base;}).map(function(s){return s.key;});var rest=shuffle(SCREENS.filter(function(s){return !s.base;}).map(function(s){return s.key;}));
- return {rid:Math.random().toString(36).slice(2,10),started:new Date().toISOString(),order:base.concat(rest),name:"",transport:"",tenure:"",events:[],story:"",per:{},choice:"",why:"",like:"",ryabit:"",wish:"",step:"intro",finished:false};}
+ return {rid:Math.random().toString(36).slice(2,10),started:new Date().toISOString(),order:base.concat(rest),name:"",transport:"",tenure:"",events:[],story:"",per:{},choice:"",why:"",like:"",ryabit:"",wish:"",feedback:"",step:"intro",finished:false};}
 var S=fresh();
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 function load(){try{var r=JSON.parse(localStorage.getItem(KEY)||"null");if(r&&r.order&&r.order.length===SCREENS.length&&r.order.every(function(k){return byKey[k];}))return r;}catch(e){}return null;}
@@ -277,14 +311,14 @@ $$("[data-key]").forEach(function(g){var key=g.getAttribute("data-key"),multi=!!
   if(multi){var a=(S[key]||[]).slice();var i=a.indexOf(t);if(i>=0)a.splice(i,1);else{if(none&&t===none)a=[t];else{a=a.filter(function(x){return x!==none;});a.push(t);}}S[key]=a;}
   else S[key]=t;
   paintGroup(g);save();});});});
-function paintAll(){$$("[data-key]").forEach(paintGroup);$("#f-name").value=S.name||"";$("#f-story").value=S.story||"";$("#f-why").value=S.why||"";$("#f-wish").value=S.wish||"";}
+function paintAll(){$$("[data-key]").forEach(paintGroup);$("#f-name").value=S.name||"";$("#f-story").value=S.story||"";$("#f-why").value=S.why||"";$("#f-wish").value=S.wish||"";$("#f-feedback").value=S.feedback||"";}
 
 /* ---------- navigation ---------- */
 function show(step,push){S.step=step;save();var isView=step.indexOf("view:")===0;
  $$(".page").forEach(function(p){p.classList.remove("on");});
  $("#viewer").classList.toggle("on",isView);document.body.classList.toggle("lock",isView);
  if(isView){openScreen(parseInt(step.split(":")[1],10));}
- else{leaveScreen();var id={intro:"p-intro",events:"p-events",now:"p-now",how:"p-how",final:"p-final",done:"p-done"}[step]||"p-intro";$("#"+id).classList.add("on");if(step==="final")buildGrid();window.scrollTo(0,0);}
+ else{leaveScreen();var id={intro:"p-intro",events:"p-events",now:"p-now",how:"p-how",final:"p-final",extra:"p-extra",done:"p-done"}[step]||"p-intro";$("#"+id).classList.add("on");if(step==="final")buildGrid();if(step==="done")paintDone();window.scrollTo(0,0);}
  if(push!==false){try{history.pushState({step:step},"");}catch(e){}}}
 window.addEventListener("popstate",function(ev){if(S.finished){show("done",false);return;}var st=ev.state&&ev.state.step;if(st){closeSheet(true);closeLightbox();show(st,false);}});
 
@@ -293,6 +327,7 @@ $("#f-name").addEventListener("input",function(){S.name=this.value;save();});
 $("#f-story").addEventListener("input",function(){S.story=this.value;save();});
 $("#f-why").addEventListener("input",function(){S.why=this.value;save();});
 $("#f-wish").addEventListener("input",function(){S.wish=this.value;save();});
+$("#f-feedback").addEventListener("input",function(){S.feedback=this.value;save();});
 $("#b-intro").onclick=function(){S.name=$("#f-name").value.trim();var ok=S.name.length>=3&&S.transport&&S.tenure;$("#e-intro").classList.toggle("on",!ok);if(ok)show("events");};
 $("#b-events").onclick=function(){S.story=$("#f-story").value.trim();var ok=(S.events||[]).length>0;$("#e-events").classList.toggle("on",!ok);if(ok)show("now");};
 $("#b-now").onclick=function(){var ok=!!S.like&&!!S.ryabit;$("#e-now").classList.toggle("on",!ok);if(ok)show("how");};
@@ -351,21 +386,37 @@ $("#lb-close").onclick=closeLightbox;
 
 function shown(k){return byKey[k].name+" (показан как Экран "+(S.order.indexOf(k)+1)+")";}
 function payload(){var fin=new Date();var p={rid:S.rid,started:S.started,finished:fin.toISOString(),durationSec:Math.round((fin-new Date(S.started))/1000),ua:navigator.userAgent,viewport:window.innerWidth+"x"+window.innerHeight,
- name:S.name,transport:S.transport,tenure:S.tenure,events:S.events,story:S.story,order:S.order.map(function(k){return byKey[k].name;}),ratings:{},screens:{},choice:S.choice,choiceLabel:S.choice?shown(S.choice):"",why:S.why,like:S.like,ryabit:S.ryabit,wish:S.wish,version:VERSION};
+ name:S.name,transport:S.transport,tenure:S.tenure,events:S.events,story:S.story,order:S.order.map(function(k){return byKey[k].name;}),ratings:{},screens:{},choice:S.choice,choiceLabel:S.choice?shown(S.choice):"",why:S.why,like:S.like,ryabit:S.ryabit,wish:S.wish,feedback:S.feedback||"",version:VERSION};
  S.order.forEach(function(k,i){var r=rec(k);p.ratings[k]=r.rating||"";p.screens[byKey[k].name]={shownAs:i+1,rating:r.rating,chips:r.chips,comment:r.comment,seconds:r.seconds,scrolledPct:r.scrolled};});return p;}
 function screensText(p){return S.order.map(function(k,i){var r=rec(k);var parts=[];if(r.chips.length)parts.push(r.chips.join(", "));if(r.comment)parts.push("«"+r.comment+"»");return byKey[k].name+": "+(r.rating||"-")+(parts.length?" ("+parts.join("; ")+")":"");}).join(" | ");}
 var sending=false;
-$("#b-send").onclick=function(){if(sending)return;S.why=$("#f-why").value.trim();S.wish=$("#f-wish").value.trim();var ok=!!S.choice;$("#e-final").classList.toggle("on",!ok);if(!ok)return;save();
+$("#b-final").onclick=function(){S.why=$("#f-why").value.trim();S.wish=$("#f-wish").value.trim();var ok=!!S.choice;$("#e-final").classList.toggle("on",!ok);if(!ok)return;save();show("extra");};
+$("#b-send").onclick=function(){if(sending)return;S.feedback=$("#f-feedback").value.trim();if(!S.choice){show("final");return;}save();
  var p=payload();try{localStorage.setItem(KEY+"-sent-"+p.rid,JSON.stringify(p));}catch(e){}
- function done(){S.finished=true;S.step="done";save();show("done",false);try{history.replaceState({step:"done"},"");}catch(e){}}
+ function done(){S.finished=true;S.step="done";save();show("done",false);celebrate();try{history.replaceState({step:"done"},"");}catch(e){}}
  if(!FORM_ACTION||FORM_ACTION.indexOf("__")===0){done();return;}
  sending=true;$("#b-send").disabled=true;$("#e-send").classList.remove("on");
  var fd=new FormData();function add(key,val){if(E[key])fd.append(E[key],val==null?"":String(val));}
  add("name",p.name);add("transport",p.transport);add("tenure",p.tenure);add("events",(p.events||[]).join("; "));add("story",p.story);
  SCREENS.forEach(function(s){add("r_"+s.key,p.ratings[s.key]);});
- add("like",p.like);add("ryabit",p.ryabit);add("screens",screensText(p));add("choice",p.choiceLabel);add("why",p.why);add("wish",p.wish);add("seconds",p.durationSec);add("ver",VERSION);add("raw",JSON.stringify(p));
+ add("like",p.like);add("ryabit",p.ryabit);add("screens",screensText(p));add("choice",p.choiceLabel);add("why",p.why);add("wish",p.wish);add("feedback",p.feedback);add("seconds",p.durationSec);add("ver",VERSION);add("raw",JSON.stringify(p));
  fetch(FORM_ACTION,{method:"POST",mode:"no-cors",body:fd}).then(done).catch(function(){$("#e-send").classList.add("on");$("#b-send").disabled=false;sending=false;});};
 $("#b-again").onclick=function(){try{localStorage.removeItem(KEY);}catch(e){}S=fresh();sending=false;$("#b-send").disabled=false;paintAll();show("intro");};
+
+/* ---------- спасибо ---------- */
+function paintDone(){var n=SCREENS.length;$("#d-n").textContent=n;$("#d-n").nextElementSibling.textContent=(n>=2&&n<=4?"экрана":"экранов")+" вы оценили";$("#d-pick").textContent=S.choice?"Экран "+(S.order.indexOf(S.choice)+1):"Готово";}
+function celebrate(){var pg=$("#p-done");pg.classList.remove("celebrate");void pg.offsetWidth;pg.classList.add("celebrate");
+ if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+ var c=$("#fx"),ctx=c.getContext&&c.getContext("2d");if(!ctx)return;
+ var dpr=Math.min(window.devicePixelRatio||1,2),W=window.innerWidth,H=window.innerHeight;c.width=W*dpr;c.height=H*dpr;c.style.display="block";ctx.setTransform(dpr,0,0,dpr,0,0);
+ var cols=["#E53935","#22A248","#2196F3","#F57C00","#111111"],ps=[],t0=Date.now(),plan=[[0,.5,.26,80,10],[280,.2,.2,40,8],[520,.8,.22,40,8],[900,.5,.16,50,9]];
+ function burst(x,y,n,pow){for(var i=0;i<n;i++){var a=Math.random()*Math.PI*2,v=pow*(.35+Math.random()*.8);ps.push({x:x,y:y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-pow*.3,w:6+Math.random()*6,h:3+Math.random()*4,r:Math.random()*6.28,vr:(Math.random()-.5)*.5,c:cols[(i+ps.length)%cols.length],life:0,ttl:80+Math.random()*60,dot:Math.random()<.25});}}
+ function tick(){var el=Date.now()-t0;while(plan.length&&plan[0][0]<=el){var b=plan.shift();burst(W*b[1],H*b[2],b[3],b[4]);}
+  ctx.clearRect(0,0,W,H);var alive=0;
+  for(var i=0;i<ps.length;i++){var p=ps[i];if(p.life>p.ttl)continue;p.life++;alive++;p.vy+=.24;p.vx*=.985;p.vy*=.985;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;
+   ctx.save();ctx.globalAlpha=Math.min(1,(1-p.life/p.ttl)*1.8);ctx.translate(p.x,p.y);ctx.rotate(p.r);ctx.fillStyle=p.c;if(p.dot){ctx.beginPath();ctx.arc(0,0,p.h*.8,0,6.29);ctx.fill();}else ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore();}
+  if(alive||plan.length)requestAnimationFrame(tick);else{ctx.clearRect(0,0,W,H);c.style.display="none";}}
+ requestAnimationFrame(tick);}
 
 /* ---------- start ---------- */
 var saved=load();
